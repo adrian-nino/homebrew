@@ -26,8 +26,20 @@ void main() {
       Then I should see "63g - course ground coffee"
       And I should see "887g - water"
     */
-    test("should give recommendation for French Press", () {
+    test("should give recommendation for French Press", () async {
       // your code here
+      // at start, we expect to see "What coffee maker are you using?"
+      final coffeeMakerQuestion = find.byValueKey('coffee-maker-question');
+      expect(await driver.getText(coffeeMakerQuestion), "What coffee maker are you using?");
+
+      // When I tap "French Press" And I tap "Continue"
+      // we expect the prompt "How many cups would you like?"
+      final frenchPressButton = find.byValueKey('french-press-btn');
+      await driver.tap(frenchPressButton);
+      final continueButton = find.byValueKey('continue-btn');
+      await driver.tap(continueButton);
+      final numberOfCupsQuestion = find.byValueKey('cup-amount-question');
+      expect(await driver.getText(numberOfCupsQuestion), "How many cups would you like?");
     });
 
     /*
@@ -41,7 +53,7 @@ void main() {
     */
     test("should give recommendation for Drip Machine", () {
       //your code here
-    });
+    }, skip: true);
   });
 
   group('Sad Paths', () {
@@ -126,10 +138,10 @@ void main() {
       //your code here
       //if you can restrict the keyboard to numbers only you can delete this test
     });
-  });
+  }, skip: true);
 
   group('Back Button', () {
     //make up your own tests to check that the back button works
     //on every page
-  });
+  }, skip: true);
 }
