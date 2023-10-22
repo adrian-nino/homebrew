@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:homebrew/utils/coffee_tools.dart';
 
 import 'cup_amount_screen.dart';
 
 class ChooseDeviceScreen extends StatefulWidget {
+  CoffeeTools session;
+  ChooseDeviceScreen(this.session);
   @override
   _ChooseDeviceScreenState createState() => _ChooseDeviceScreenState();
 }
@@ -37,18 +40,17 @@ class _ChooseDeviceScreenState extends State<ChooseDeviceScreen> {
                               groupValue: selectedMachine,
                               onChanged: (value) {
                                 setState(() {
-                                  print("frenchy");
                                   selectedMachine = value;
                                 });
                               }
                             ),
                             RadioListTile(
+                              key: Key("drip-machine-btn"),
                               title: Text("Drip Machine"),
                               value: "Drip_Machine",
                               groupValue: selectedMachine,
                               onChanged: (value) {
                                 setState(() {
-                                  print("drippy");
                                   selectedMachine = value;
                                 });
                               }
@@ -64,9 +66,9 @@ class _ChooseDeviceScreenState extends State<ChooseDeviceScreen> {
                     child: TextButton(
                       child: Text("Continue", key: Key("continue-btn")),
                       onPressed: selectedMachine == '' ? null : () {
-                          print(selectedMachine);
+                          widget.session.inputMachine(selectedMachine);
                           Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) => CupAmountScreen()));
+                                  MaterialPageRoute(builder: (context) => CupAmountScreen(widget.session)));
                       },
                     )
                   )

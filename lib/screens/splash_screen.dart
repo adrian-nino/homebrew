@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:homebrew/utils/coffee_tools.dart';
 import 'dart:async';
 import 'choose_device_screen.dart';
 
 class SplashScreen extends StatefulWidget {
+  CoffeeTools session;
+  SplashScreen(this.session);
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -21,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   navigateToDeviceScreen() {
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => ChooseDeviceScreen()));
+        context, MaterialPageRoute(builder: (context) => ChooseDeviceScreen(widget.session)));
   }
 
   @override

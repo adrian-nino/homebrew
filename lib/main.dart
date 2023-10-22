@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:homebrew/utils/coffee_tools.dart';
 import 'package:homebrew/screens/splash_screen.dart';
 
 void main() {
-  runApp(MyApp());
+  CoffeeTools session = CoffeeTools();
+  runApp(MyApp(session));
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+  CoffeeTools session;
+  MyApp(this.session);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,7 +20,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: SplashScreen(),
+      home: SplashScreen(session),
     );
   }
 }

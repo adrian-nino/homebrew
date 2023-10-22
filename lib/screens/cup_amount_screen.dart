@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:homebrew/utils/coffee_tools.dart';
+
+
+import 'recommended_screen.dart';
 
 class CupAmountScreen extends StatefulWidget {
+  CoffeeTools session;
+  CupAmountScreen(this.session);
   @override
   _CupAmountScreenState createState() => _CupAmountScreenState();
 }
@@ -8,14 +14,17 @@ class CupAmountScreen extends StatefulWidget {
 
 class _CupAmountScreenState extends State<CupAmountScreen> {
   final cupAmount = TextEditingController();
-  bool isFilled = false;
+  bool isValid = false;
   void initState() {
     super.initState();
     cupAmount.addListener(changeOnPressed);
   }
   void changeOnPressed() {
     setState(() {
-      isFilled = cupAmount.text != "";
+      if (cupAmount.text == null) {
+        isValid = false;
+       }
+      isValid = int.tryParse(cupAmount.text) != null && int.tryParse(cupAmount.text) > 0;
     });
   }
 
@@ -23,6 +32,17 @@ class _CupAmountScreenState extends State<CupAmountScreen> {
   @override
   Widget build(BuildContext context) {
   return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          key: Key('back-btn'),
+          icon: Icon(
+            Icons.arrow_back_ios
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          }
+        )
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Center(
@@ -37,6 +57,7 @@ class _CupAmountScreenState extends State<CupAmountScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextField(
+                    key: Key('text-box'),
                     controller: cupAmount,
                     keyboardType: TextInputType.number,
                   )
@@ -45,11 +66,12 @@ class _CupAmountScreenState extends State<CupAmountScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextButton(
+                    key: Key('continue2-btn'),
                     child: Text("Continue"),
-                    onPressed: !isFilled ? null : () {
-                      print("continue");
-                      print(isFilled);
-                      print(cupAmount.text);
+                    onPressed: !isValid ? null : () {
+                      widget.session.inputCups(int.parse(cupAmount.text));
+                      Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) => RecommendedScreen(widget.session)));
                     }
                   )
                 )

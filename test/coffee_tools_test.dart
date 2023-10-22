@@ -2,6 +2,78 @@ import 'package:homebrew/utils/coffee_tools.dart';
 import 'package:test/test.dart';
 
 void main() {
+  group("setter functions", () {
+    test('inputMachine with valid machine', () {
+      final test = CoffeeTools();
+      test.inputMachine("French_Press");
+      expect(test.selectedMachine, "French_Press");
+    });
+
+    test('inputMachine with invalid machine', () {
+      final test = CoffeeTools();
+      expect(() => test.inputMachine(""), throwsArgumentError);
+    });
+
+    test('inputCups with valid number', () {
+      final test = CoffeeTools();
+      test.inputCups(5);
+      expect(test.userCups, 5);
+    });
+
+    test('inputCups with invalid number', () {
+      final test = CoffeeTools();
+      expect(() => test.inputCups(0), throwsArgumentError);
+    });
+
+    test('clearValues', () {
+      final test = CoffeeTools();
+      test.inputMachine("French_Press");
+      test.inputCups(5);
+      test.clearValues();
+      expect(test.selectedMachine, "");
+      expect(test.userCups, 0);
+    });
+
+  });
+
+  group("getter functions", () {
+    test('currentMachine', () {
+      final test = CoffeeTools();
+      test.inputMachine("French_Press");
+      expect(test.currentMachine(), "French_Press");
+    });
+
+    test('currentCups', () {
+      final test = CoffeeTools();
+      test.inputCups(5);
+      expect(test.currentCups(), 5);
+    });
+
+    test('coffeeAmountNeeded', () {
+      final test = CoffeeTools();
+      test.inputMachine("Drip_Machine");
+      test.inputCups(5);
+      double result = test.coffeeAmountNeeded();
+      expect(result, greaterThan(50));
+      expect(result, lessThan(51));
+    });
+
+    test('waterNeeded', () {
+      final test = CoffeeTools();
+      test.inputMachine("Drip_Machine");
+      test.inputCups(5);
+      double result = test.waterNeeded();
+      expect(result, greaterThan(850));
+      expect(result, lessThan(851));
+    });
+
+    test('coffeeGroundType', () {
+      final test = CoffeeTools();
+      test.inputMachine("Drip_Machine");
+      expect(test.coffeeGroundType(), "medium ground coffee");
+    });
+  });
+
   group("cupsToOunces", () {
     test('calculates ounces on 1 cup', () {
       var ounces = CoffeeTools.cupsToOunces(1);
