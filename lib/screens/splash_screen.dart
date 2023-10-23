@@ -24,16 +24,60 @@ class _SplashScreenState extends State<SplashScreen> {
 
   navigateToDeviceScreen() {
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => ChooseDeviceScreen(widget.session)));
+       context, MaterialPageRoute(builder: (context) => ChooseDeviceScreen(widget.session)));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [Text("HOMEBREW"), Text("Great Coffee at Home")],
+      body: Container(
+        color: Color(0xFF4C748B),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Stack(
+                children: [
+                  Text(
+                    "HOMEBREW",
+                    style: TextStyle(
+                      fontFamily: 'Norwester',
+                      fontSize: 48,
+                      letterSpacing: 4,
+                      foreground: Paint()
+                        ..style = PaintingStyle.stroke
+                        ..strokeWidth = 2
+                        ..color = Colors.black
+                    ),
+                    ),
+                    Text(
+                      "HOMEBREW",
+                      style: TextStyle(
+                        fontFamily: "Norwester",
+                        fontSize: 48,
+                        letterSpacing: 4,
+                        color: Color(0xFFFFFFFF),
+                        shadows: [
+                          Shadow(
+                            color: Colors.black,
+                            blurRadius: 1.0,
+                            offset: Offset(0.0, 3.0),
+                          )
+                        ],
+                      )
+                    ),
+                ],
+              ),
+              Text(
+                "Great Coffee at Home",
+                style: TextStyle(
+                  fontFamily: "Kollektif",
+                  fontSize: 18,
+                  color: Color(0xFFFFFFFF),
+                ),
+                )
+              ],
+          ),
         ),
       ),
     );
